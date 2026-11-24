@@ -65,6 +65,8 @@
     return e;
   }
   function str(v) { return typeof v === "string" ? v.trim() : ""; }
+  /* mono caps suit a short cue like "+60"; a worked example has to read like a sentence */
+  function inCls(ph) { return "in" + (ph && String(ph).length > 26 ? " in--ex" : ""); }
   function size(n) { return n >= MB ? (n / MB).toFixed(n >= 10 * MB ? 0 : 1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
   function total() { return files.reduce(function (s, f) { return s + f.size; }, 0); }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
@@ -198,7 +200,7 @@
     path = path || f.id;
     var id = "f-" + path, t = f.type;
     if (t === "text" || t === "email" || t === "tel" || t === "url") {
-      var inp = h("input", { class: "in", id: id, type: t === "url" ? "url" : t, value: store[f.id] || "", placeholder: f.placeholder || null,
+      var inp = h("input", { class: inCls(f.placeholder), id: id, type: t === "url" ? "url" : t, value: store[f.id] || "", placeholder: f.placeholder || null,
         autocomplete: f.autocomplete || "off", inputmode: f.inputmode || (t === "url" ? "url" : null), "aria-describedby": f.hint ? id + "-h" : null,
         oninput: function () { store[f.id] = inp.value; unflag(inp); save(); },
         onblur: function () {
@@ -216,7 +218,7 @@
       var arr = Array.isArray(store[f.id]) ? store[f.id] : (store[f.id] = []);
       var rows = [];
       for (var i = 0; i < (f.count || 3); i++) (function (i) {
-        var li = h("input", { class: "in", id: i === 0 ? id : id + "-" + i, value: arr[i] || "", placeholder: (f.placeholder || [])[i] || null,
+        var li = h("input", { class: inCls((f.placeholder || [])[i]), id: i === 0 ? id : id + "-" + i, value: arr[i] || "", placeholder: (f.placeholder || [])[i] || null,
           "aria-label": f.label + ", " + (i + 1), oninput: function () { arr[i] = li.value; save(); } });
         rows.push(h("div", { class: "list__row" }, [h("span", { class: "list__n", "aria-hidden": "true", text: String(i + 1) }), li]));
       })(i);
@@ -494,6 +496,7 @@
       h("div", { class: "intro__top" }, [mark(), h("p", { class: "intro__doc", text: B.doc })]),
       h("h1", { text: I.title }),
       h("p", { class: "intro__lede", text: I.lede }),
+      planBlock(),
       I.pages ? h("div", { class: "intro__plan" }, [h("h2", { text: "What the new site could include" }),
         h("ul", { class: "intro__pages" }, I.pages.map(function (p) { return h("li", { text: p }); }))]) : null,
       h("ul", { class: "intro__notes" }, (I.notes || []).map(function (n, i) { return h("li", null, [h("span", { "aria-hidden": "true", html: [ICON.clock, ICON.pen, ICON.save][i % 3] }), h("span", { text: n })]); })),
@@ -502,6 +505,39 @@
       h("p", { class: "intro__by", text: "Prepared by " + B.by })
     ])]));
     doc.title = B.doc + " · " + B.name;
+  }
+
+  /* the page plans, side by side, before any question is asked */
+  function planBlock() {
+    var P = B.plan;
+    if (!P) return null;
+    return h("section", { class: "plan", "aria-label": P.label || "The plan" }, [
+      h("div", { class: "plan__head" }, [
+        P.label ? h("span", { class: "lbl" }, [h("i", { class: "sq", "aria-hidden": "true" }), h("span", { class: "plan__kick", text: P.label })]) : null,
+        h("h2", { class: "plan__title", text: P.title }),
+        P.lede ? h("p", { class: "plan__lede", text: P.lede }) : null
+      ]),
+      h("div", { class: "plan__grid" }, (P.options || []).map(function (o) {
+        return h("article", { class: "plan__opt" + (o.pick ? " is-pick" : "") }, [
+          h("div", { class: "plan__top" }, [
+            h("span", { class: "plan__name", text: o.name }),
+            o.pick ? h("span", { class: "plan__tag", text: o.pick }) : null
+          ]),
+          h("p", { class: "plan__sub", text: o.sub }),
+          h("p", { class: "plan__note", text: o.note }),
+          h("ul", { class: "plan__pages" }, (o.pages || []).map(function (pg, i) {
+            var name = typeof pg === "string" ? pg : pg.name;
+            var isNew = typeof pg === "object" && pg["new"];
+            return h("li", { class: isNew ? "is-new" : null }, [
+              h("i", { class: "plan__dot", "aria-hidden": "true" }),
+              h("span", { class: "plan__pg" }, [name, isNew && pg.why ? h("em", { text: pg.why }) : null])
+            ]);
+          })),
+          h("p", { class: "plan__count", text: (o.pages || []).length + " pages" })
+        ]);
+      })),
+      P.foot ? h("p", { class: "plan__foot", text: P.foot }) : null
+    ]);
   }
 
   function navList(onPick) {
