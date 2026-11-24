@@ -13,28 +13,38 @@ window.BRIEF = {
   /* the lockup from mhdshazwn.com, with the clinic named underneath */
   mark: '<span class="mark"><span class="n">Shazwan&#169;</span><span class="s">Esteem Dental</span></span>',
 
-  /* The opening screen pitches before it asks: the two page plans, side by side. */
+  /* The opening screen pitches before it asks: the page plan, with the add-ons beside it. */
   plan: {
     label: "The plan",
-    title: "Your site has nine pages today. Here are two ways to rebuild them.",
-    lede: "Nine pages, not four. Four are in your menu; the other five are the treatment pages underneath. Google reads five of them as the same page, because they all carry the same title.",
+    title: "Nine pages, rebuilt from the ground up.",
+    lede: "Nine, not four. Four are in your menu; the other five are the treatment pages underneath. Google reads five of them as the same page, because they all carry the same title. Same map, rebuilt properly.",
     options: [
       {
-        name: "Idea one",
+        name: "The revamp",
         sub: "The same nine pages",
-        note: "Nothing new to write. The same map, rebuilt so each page has a real heading, its own title and its own place on Google.",
+        note: "Nothing new for you to write. Every page gets a real heading, its own title, its own words and its own place on Google.",
         pages: ["Home", "About", "Services", "General Dentistry", "Cosmetic Dentistry", "Implant Dentistry", "Orthodontic", "Oral Surgery", "Find Us"]
-      },
-      {
-        name: "Idea two",
-        sub: "Eleven pages",
-        pick: "What I would do",
-        note: "Everything in idea one, plus the two pages that bring in people who have not heard of you yet.",
-        pages: ["Home", "About", "Services", "General Dentistry", "Cosmetic Dentistry", "Implant Dentistry", "Orthodontic", "Oral Surgery", "Find Us",
-          { name: "Our Dentists", "new": true, why: "People choose a dentist, not a clinic" },
-          { name: "Blog", "new": true, why: "Nine pages can only answer nine questions" }]
       }
     ],
+    /* Shown beside the plan. Change a price here and it changes on the form too. */
+    addons: {
+      label: "Add on",
+      title: "Two things you can add",
+      note: "Both are optional. Neither changes the price of the website itself, and nothing is charged until you say so.",
+      items: [
+        {
+          name: "Website maintenance",
+          note: "Any change, update or new page you want, done by me for the whole period. No hourly rate, no waiting on a quote.",
+          tiers: [{ label: "12 months", price: "RM1,000" }, { label: "6 months", price: "RM600" }]
+        },
+        {
+          name: "SEO content",
+          note: "Four articles a month, written, optimised and published on your blog. The pages that bring in people searching for a dentist before they know your name.",
+          tiers: [{ label: "12 months, 48 articles", price: "RM6,000", foot: "Works out to eight articles free" },
+                  { label: "6 months, 24 articles", price: "RM3,600" }]
+        }
+      ]
+    },
     foot: "Either way, every treatment you offer gets written up properly. That is what the rest of this form is for."
   },
 
@@ -49,17 +59,30 @@ window.BRIEF = {
      so it is already clear whose it is, and I have their numbers. */
   steps: [
     {
-      id: "plan", title: "Which one shall we build?",
-      lede: "The two plans are on the opening screen. Nothing is locked in, this just tells me where to start.",
+      id: "addons", title: "The two add-ons",
+      lede: "They are on the opening screen. Pick one if you want it, or leave both. Nothing is locked in and nothing is charged until you say so.",
       fields: [
-        { id: "plan_pick", type: "radio", label: "Pick one",
+        { id: "add_care", type: "radio", label: "Website maintenance",
+          hint: "Any change, update or new page you want, done by me for the whole period.",
           options: [
-            { label: "Idea one — the same nine pages, rebuilt" },
-            { label: "Idea two — eleven pages, with Our Dentists and a Blog" },
-            { label: "Not sure yet, let us talk it through" }
+            { label: "12 months, RM1,000" },
+            { label: "6 months, RM600" },
+            { label: "Not for now" },
+            { label: "Tell me more first" }
           ] },
-        { id: "plan_pages", type: "textarea", rows: 3, label: "Any page you want added, dropped or renamed?",
-          placeholder: "e.g. Drop Oral Surgery and put it under General. Add a page just for All-on-4. Call it Our Team instead of Our Dentists." }
+        { id: "add_seo", type: "radio", label: "SEO content",
+          hint: "Four articles a month, written, optimised and published on your blog.",
+          options: [
+            { label: "12 months, 48 articles, RM6,000" },
+            { label: "6 months, 24 articles, RM3,600" },
+            { label: "Not for now" },
+            { label: "Tell me more first" }
+          ] },
+        { id: "add_pages", type: "textarea", rows: 3, label: "Any page you want added, dropped or renamed?",
+          hint: "The nine pages are a starting point, not a rule.",
+          placeholder: "e.g. Drop Oral Surgery and put it under General. Add a page just for All-on-4. We would like a page for each dentist." },
+        { id: "add_ask", type: "textarea", rows: 2, label: "Anything you want to ask about either add-on?",
+          placeholder: "e.g. Does maintenance cover adding a new dentist to the site? Who decides what the articles are about?" }
       ]
     },
 

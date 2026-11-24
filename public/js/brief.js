@@ -396,8 +396,8 @@
     var input = h("input", { type: "file", multiple: true, id: "f-" + path, accept: "image/*,.zip,.pdf,.ai,.eps,.psd,.svg,.heic,.heif,.mp4,.mov", "aria-describedby": "f-" + path + "-h" });
     var drop = h("div", { class: "drop" }, [
       h("span", { class: "drop__ic", "aria-hidden": "true", html: ICON.up }),
-      h("span", { class: "drop__t", text: "Drop files here or tap to choose" }),
-      h("span", { class: "drop__s", text: "Photos, a zip, logo files or a PDF" }),
+      h("span", { class: "drop__t", text: "Drop here" }),
+      h("span", { class: "drop__s", text: "Or tap to choose. Photos, PDF, zip, logo files" }),
       input
     ]);
     var bar = h("i"), used = h("span"), left = h("span");
@@ -507,7 +507,7 @@
     doc.title = B.doc + " · " + B.name;
   }
 
-  /* the page plans, side by side, before any question is asked */
+  /* the page plan, with the add-ons beside it, before any question is asked */
   function planBlock() {
     var P = B.plan;
     if (!P) return null;
@@ -517,26 +517,52 @@
         h("h2", { class: "plan__title", text: P.title }),
         P.lede ? h("p", { class: "plan__lede", text: P.lede }) : null
       ]),
-      h("div", { class: "plan__grid" }, (P.options || []).map(function (o) {
-        return h("article", { class: "plan__opt" + (o.pick ? " is-pick" : "") }, [
-          h("div", { class: "plan__top" }, [
-            h("span", { class: "plan__name", text: o.name }),
-            o.pick ? h("span", { class: "plan__tag", text: o.pick }) : null
-          ]),
-          h("p", { class: "plan__sub", text: o.sub }),
-          h("p", { class: "plan__note", text: o.note }),
-          h("ul", { class: "plan__pages" }, (o.pages || []).map(function (pg, i) {
-            var name = typeof pg === "string" ? pg : pg.name;
-            var isNew = typeof pg === "object" && pg["new"];
-            return h("li", { class: isNew ? "is-new" : null }, [
-              h("i", { class: "plan__dot", "aria-hidden": "true" }),
-              h("span", { class: "plan__pg" }, [name, isNew && pg.why ? h("em", { text: pg.why }) : null])
-            ]);
-          })),
-          h("p", { class: "plan__count", text: (o.pages || []).length + " pages" })
+      h("div", { class: "plan__grid" + (P.addons ? " plan__grid--side" : "") },
+        (P.options || []).map(planCard).concat(P.addons ? [addonBlock(P.addons)] : [])),
+      P.foot ? h("p", { class: "plan__foot", text: P.foot }) : null
+    ]);
+  }
+
+  function planCard(o) {
+    return h("article", { class: "plan__opt" + (o.pick ? " is-pick" : "") }, [
+      h("div", { class: "plan__top" }, [
+        h("span", { class: "plan__name", text: o.name }),
+        o.pick ? h("span", { class: "plan__tag", text: o.pick }) : null
+      ]),
+      h("p", { class: "plan__sub", text: o.sub }),
+      h("p", { class: "plan__note", text: o.note }),
+      h("ul", { class: "plan__pages" }, (o.pages || []).map(function (pg) {
+        var name = typeof pg === "string" ? pg : pg.name;
+        var isNew = typeof pg === "object" && pg["new"];
+        return h("li", { class: isNew ? "is-new" : null }, [
+          h("i", { class: "plan__dot", "aria-hidden": "true" }),
+          h("span", { class: "plan__pg" }, [name, isNew && pg.why ? h("em", { text: pg.why }) : null])
         ]);
       })),
-      P.foot ? h("p", { class: "plan__foot", text: P.foot }) : null
+      h("p", { class: "plan__count", text: (o.pages || []).length + " pages" })
+    ]);
+  }
+
+  /* the optional extras, stacked down the side of the plan */
+  function addonBlock(A) {
+    return h("aside", { class: "adds", "aria-label": A.title || "Add on" }, [
+      h("div", { class: "adds__head" }, [
+        A.label ? h("span", { class: "lbl" }, [h("i", { class: "sq", "aria-hidden": "true" }), h("span", { class: "adds__kick", text: A.label })]) : null,
+        A.title ? h("h3", { class: "adds__title", text: A.title }) : null,
+        A.note ? h("p", { class: "adds__note", text: A.note }) : null
+      ]),
+      h("div", { class: "adds__list" }, (A.items || []).map(function (it) {
+        return h("article", { class: "addon" }, [
+          h("h4", { class: "addon__name", text: it.name }),
+          it.note ? h("p", { class: "addon__note", text: it.note }) : null,
+          h("ul", { class: "addon__tiers" }, (it.tiers || []).map(function (t) {
+            return h("li", null, [
+              h("span", { class: "addon__t" }, [t.label, t.foot ? h("em", { text: t.foot }) : null]),
+              h("span", { class: "addon__p", text: t.price })
+            ]);
+          }))
+        ]);
+      }))
     ]);
   }
 
