@@ -15,43 +15,27 @@ window.BRIEF = {
 
   intro: {
     title: "Help me plan your new website.",
-    lede: "Your current site has four pages, with a few lines for each treatment. The new one gives every treatment, every dentist and every question patients ask its own space. I write the words; you give me the facts.",
+    lede: "Your current site gives each treatment a line or two. The new one gives every treatment, every dentist and every question patients ask its own space. This is where the words come from. I do the writing, you give me the facts.",
     pages: ["Home", "About Esteem", "Our dentists", "A page for each treatment", "Technology", "Patient stories", "Questions patients ask", "Find us and book"],
-    notes: ["Takes about 20 minutes", "Answer what you can. Nothing here is compulsory", "Stop whenever you like. Continue later gives you a link that reopens your answers on any device"]
+    notes: ["Takes about 15 minutes", "Answer what you can. Nothing here is compulsory", "Stop whenever you like. Continue later gives you a link that reopens your answers on any device"]
   },
 
   /* No "who is filling this in" step: the brief lives on the client's own subdomain,
      so it is already clear whose it is, and I have their numbers. */
   steps: [
     {
-      id: "goals", title: "What should the new site do?",
-      lede: "This decides what goes at the top of every page.",
-      fields: [
-        { id: "goals_better", type: "chips", label: "What should it do better than the current site?", hint: "Pick as many as you like.",
-          options: ["Bring in more bookings", "Explain each treatment properly", "Show up on Google for treatments near us", "Introduce our dentists", "Show real results and reviews", "Answer questions before patients WhatsApp us", "Look more modern and premium"], other: "Something else" },
-        { id: "goals_treatments", type: "chips", label: "Which treatments do you want more patients for?", hint: "Pick up to three. These get the most space on the homepage.", max: 3,
-          options: ["Dental implants", "All-on-4 / All-on-6", "Clear aligners", "Braces", "Veneers", "Teeth whitening", "One-day crown", "Smile makeover", "Wisdom tooth removal", "Scaling and polishing", "Check-ups"] },
-        { id: "goals_patients", type: "chips", label: "Who are most of your patients?",
-          options: ["Families with children", "Working adults", "Seniors", "Students", "Patients who are nervous about the dentist", "Patients coming for implants or bigger cases"], other: "Someone else" },
-        { id: "goals_areas", type: "chips", label: "Where do most patients travel from?", hint: "These help the right people find you on Google.",
-          options: ["Seri Kembangan", "Serdang", "Balakong", "Puchong", "Putrajaya", "Cyberjaya", "Kajang", "Bangi", "Cheras", "Kuala Lumpur"], other: "Other areas" },
-        { id: "goals_rivals", type: "textarea", rows: 2, label: "Which clinics do patients compare you with?", hint: "Names or websites. I will look at what they do well, and do it better." }
-      ]
-    },
-
-    {
       id: "home", title: "Your homepage",
-      lede: "Give me the idea in your own words. I will polish the wording.",
+      lede: "The words at the top of the page. Give me the idea in your own words and I will polish it.",
       quote: { label: "Your homepage says today", text: "Modern dental clinic offering comprehensive, comfortable care" },
       fields: [
         { id: "home_h1", type: "textarea", rows: 2, label: "Main headline", hint: "The one thing a first-time visitor should understand in five seconds." },
         { id: "home_h2", type: "textarea", rows: 2, label: "The line under it", hint: "One or two sentences that back the headline up." },
-        { id: "home_reasons", type: "list", count: 3, label: "Three reasons patients pick Esteem over another clinic", placeholder: ["First reason", "Second reason", "Third reason"] },
-        { id: "home_year", type: "text", label: "Year the clinic opened", half: true, inputmode: "numeric" },
-        { id: "home_dentists", type: "text", label: "Number of dentists", half: true, inputmode: "numeric" },
-        { id: "home_patients", type: "text", label: "Patients treated so far", half: true, placeholder: "Roughly is fine" },
-        { id: "home_implants", type: "text", label: "Implants placed so far", half: true, placeholder: "Roughly is fine" },
-        { id: "home_rating", type: "text", label: "Google rating and number of reviews", placeholder: "For example 4.9 from 320 reviews", hint: "Only numbers you are happy to see on the site. I show them exactly as written." },
+        { id: "home_reasons", type: "list", count: 3, label: "Three things every visitor should know about Esteem", placeholder: ["First thing", "Second thing", "Third thing"] },
+        { id: "home_focus", type: "chips", label: "Which treatments should get the most space?", hint: "Pick up to three. These sit highest on the homepage.", max: 3,
+          options: ["Dental implants", "All-on-4 / All-on-6", "Clear aligners", "Braces", "Veneers", "Teeth whitening", "One-day crown", "Smile makeover", "Wisdom tooth removal", "Scaling and polishing", "Check-ups"] },
+        { id: "home_numbers", type: "textarea", rows: 3, label: "Numbers you are happy to show on the site",
+          placeholder: "Opened 2015\n4 dentists\n12,000 patients\n4.9 from 320 Google reviews",
+          hint: "One per line. Year opened, how many dentists, patients treated, implants placed, your Google rating. Roughly is fine, and skip any you would rather leave off. I print them exactly as you write them." },
         { id: "home_button", type: "radio", label: "What should the main button do?",
           options: [{ label: "Open WhatsApp" }, { label: "Call the clinic" }, { label: "Open our online booking system", more: "Link to the booking system" }, { label: "Open a booking form on the website" }] },
         { id: "home_extra", type: "textarea", rows: 3, label: "Anything else you want on the homepage?" }
@@ -63,8 +47,7 @@ window.BRIEF = {
       lede: "This becomes the About page. Short answers are fine.",
       fields: [
         { id: "story_start", type: "textarea", rows: 4, label: "When did Esteem open, and why?", hint: "Who started it, and what they wanted to do differently from other clinics." },
-        { id: "story_comfort", type: "textarea", rows: 4, label: "Your site promises “extra comfort, at no extra cost”. What does that look like on a visit?", hint: "The small things patients notice. For example numbing gel before an injection, explaining each step first, a blanket, music or TV." },
-        { id: "story_words", type: "text", label: "Describe the clinic in three words" },
+        { id: "story_comfort", type: "textarea", rows: 4, label: "Your site promises “extra comfort, at no extra cost”. What does that look like on a visit?", hint: "The small things a patient would notice. Numbing gel before an injection, talking them through each step, a blanket, music." },
         { id: "story_langs", type: "chips", label: "Languages your team speaks", options: ["English", "Bahasa Melayu", "Mandarin", "Cantonese", "Hokkien", "Tamil"], other: "Other languages" },
         { id: "story_facilities", type: "chips", label: "What do you have at the clinic?", options: ["Parking nearby", "Wheelchair access", "Child-friendly", "Wi-Fi", "Private consultation room"], other: "Something else" },
         { id: "story_pay", type: "chips", label: "How can patients pay?", options: ["Cash", "Card", "DuitNow QR or e-wallet", "Instalment plan", "Insurance or company panel"], other: "Other" },
@@ -81,7 +64,6 @@ window.BRIEF = {
             { id: "name", type: "text", label: "Name as it should appear", placeholder: "Dr" , half: true },
             { id: "quals", type: "text", label: "Qualifications", placeholder: "Degree, university, year", half: true, hint: "Exactly as registered, so the titles on the site stay accurate." },
             { id: "does", type: "text", label: "Treatments they do most", half: true },
-            { id: "langs", type: "text", label: "Languages", half: true },
             { id: "line", type: "textarea", rows: 2, label: "A line in their own words", hint: "Why they became a dentist, or what patients say about them." }
           ] },
         { id: "team_rest", type: "radio", label: "Show the rest of the team on the site?",
@@ -91,9 +73,9 @@ window.BRIEF = {
 
     {
       id: "treat", title: "Treatments",
-      lede: "Your Services page lists every treatment in a line or two. On the new site each main treatment gets its own page, which helps patients decide and helps Google send them to you.",
+      lede: "Right now each treatment gets a line or two. On the new site the main ones get a page each, so this is where most of the writing comes from.",
       fields: [
-        { id: "treat_pick", type: "cards", label: "Tick the treatments that should get their own page", hint: "Then open each one and answer what you can. A few words per box is plenty.",
+        { id: "treat_pick", type: "cards", label: "Tick the treatments that should get their own page", hint: "Then open each one. Three boxes each, a few words per box.",
           groups: [
             { name: "General", items: ["Check-up and consultation", "Scaling and polishing"] },
             { name: "Oral surgery", items: ["Tooth extraction", "Wisdom tooth removal"] },
@@ -104,28 +86,26 @@ window.BRIEF = {
           ],
           other: "Add a treatment that is not listed",
           fields: [
-            { id: "who", type: "textarea", rows: 2, label: "Who is it for, and what problem does it fix?" },
-            { id: "steps", type: "textarea", rows: 3, label: "What happens, step by step?", hint: "How many visits, and roughly how long each one takes." },
-            { id: "feel", type: "textarea", rows: 2, label: "Does it hurt? How long is recovery?" },
-            { id: "diff", type: "textarea", rows: 2, label: "What is different about how Esteem does it?", hint: "Equipment, brands, materials, an in-house lab." },
-            { id: "price", type: "radio", label: "Price on the website",
-              options: [{ label: "Show a starting price", more: "From RM" }, { label: "Price after consultation" }, { label: "Do not mention price" }] },
-            { id: "asks", type: "textarea", rows: 2, label: "What do patients usually ask about it?" },
-            { id: "ba", type: "radio", label: "Before and after photos with patient consent?", options: [{ label: "Yes" }, { label: "Some, need to ask" }, { label: "No" }] }
-          ] }
+            { id: "who", type: "textarea", rows: 2, label: "Who is it for, and what does it fix?" },
+            { id: "steps", type: "textarea", rows: 3, label: "What happens, from the first visit to the last?", hint: "How many visits, how long each takes, how long to heal." },
+            { id: "asks", type: "textarea", rows: 2, label: "What do patients always ask about it?", hint: "Their questions, your answers. These become the page's own Q and A." }
+          ] },
+        { id: "treat_price", type: "radio", label: "How should prices read across the site?", hint: "Asked once, applied everywhere. I can still do it differently on one page if you say so.",
+          options: [{ label: "Show a starting price for each treatment" }, { label: "Say the price comes after a consultation" }, { label: "Leave prices off the site" }] },
+        { id: "treat_diff", type: "textarea", rows: 3, label: "What do you do differently from the clinic down the road?", hint: "Equipment, brands, materials, an in-house lab, how long you take over a case. One answer is fine, it runs through every treatment page." }
       ]
     },
 
     {
-      id: "proof", title: "Technology and proof",
-      lede: "The things that make a nervous patient trust you before they walk in.",
+      id: "proof", title: "Your equipment and your reviews",
+      lede: "The proof that goes on the site. Tick, paste, and move on.",
       quote: { label: "Your Services page says today", text: "Esteem Dental Clinic is the only Megagen R2Gate implant centre in Malaysia" },
       fields: [
         { id: "proof_r2gate", type: "radio", label: "Is that line still true today?",
           options: [{ label: "Yes, keep it" }, { label: "It needs updating", more: "How should it read now?" }, { label: "Not sure" }] },
         { id: "proof_tech", type: "chips", label: "Which of these do you use?", hint: "Tick only what you have. I will explain each one in plain words.",
           options: ["R2Gate guided implant surgery", "Digital implant planning", "Dynamic navigation", "3D CBCT scan", "Intraoral scanner", "Digital X-ray", "In-house clear aligners", "Same-day crowns (CAD/CAM)"], other: "Other equipment" },
-        { id: "proof_awards", type: "textarea", rows: 3, label: "Awards, certificates, memberships or media features", hint: "With the year if you have it." },
+        { id: "proof_awards", type: "textarea", rows: 3, label: "Awards, certificates, memberships or media features", hint: "With the year if you have it. Skip if there are none." },
         { id: "proof_google", type: "url", label: "Link to your Google Business Profile", placeholder: "https://" },
         { id: "proof_reviews", type: "textarea", rows: 5, label: "Paste three to five reviews you love", hint: "From Google, Facebook or WhatsApp. I quote them word for word, with first names only." },
         { id: "proof_cases", type: "radio", label: "Can we show before and after cases?",
@@ -135,7 +115,7 @@ window.BRIEF = {
 
     {
       id: "faq", title: "Questions patients ask",
-      lede: "The questions your team answers on WhatsApp every week. On the site they save you time and help with Google.",
+      lede: "The ones your team answers on WhatsApp every week. Three is enough to start.",
       fields: [
         { id: "faq_items", type: "repeat", min: 3, max: 20, item: "Question", add: "Add another question", compact: true,
           fields: [
@@ -181,7 +161,7 @@ window.BRIEF = {
           options: [{ label: "Still the same" }, { label: "Some things changed", more: "What changed? Upload the new guide in the last section." }, { label: "We would like a fresh look" }] },
         { id: "look_words", type: "chips", label: "Pick up to three words for the feel", max: 3,
           options: ["Calm", "Warm", "Premium", "Friendly", "Modern", "Clean", "Gentle", "Family", "Bright", "Confident"] },
-        { id: "look_refs", type: "repeat", min: 2, max: 6, item: "Website", add: "Add another website", compact: true,
+        { id: "look_refs", type: "repeat", min: 1, max: 6, item: "Website", add: "Add another website", compact: true,
           label: "Websites you like", hint: "Dental or not. Tell me what you like about each one.",
           fields: [
             { id: "url", type: "url", label: "Link", placeholder: "https://" },
