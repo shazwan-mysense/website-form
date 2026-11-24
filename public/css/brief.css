@@ -119,7 +119,7 @@ p { margin: 0; }
 .plan__title { margin-top: 14px; font-size: clamp(24px, 3vw, 34px); line-height: 1.08; letter-spacing: -.03em; text-transform: uppercase; }
 .plan__lede { margin-top: 14px; font-size: 15px; line-height: 1.6; color: var(--mut); }
 .plan__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
-.plan__grid--side { grid-template-columns: 1.02fr .98fr; align-items: start; }
+.plan__grid--one { grid-template-columns: minmax(0, 430px); }
 .plan__opt { display: flex; flex-direction: column; padding: 24px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line2); }
 .plan__opt.is-pick { background: var(--ink); color: var(--inv); box-shadow: none; }
 .plan__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -145,23 +145,6 @@ p { margin: 0; }
 .plan__count { margin-top: auto; padding-top: 18px; font-family: var(--mono); font-weight: 500; font-size: 11px; text-transform: uppercase; color: var(--mut); letter-spacing: 0; }
 .plan__opt.is-pick .plan__count { color: var(--inv6); }
 .plan__foot { margin-top: 20px; font-size: 14.5px; line-height: 1.6; color: var(--mut); max-width: 72ch; }
-
-/* ---------------------------------------------------------------- the add-ons, beside the plan */
-.adds { display: flex; flex-direction: column; }
-.adds__head { padding: 2px 0 0; }
-.adds__kick { font-family: var(--mono); font-weight: 500; font-size: 12px; text-transform: uppercase; color: var(--mut); letter-spacing: 0; }
-.adds__title { margin-top: 12px; font-size: 25px; line-height: 1.05; letter-spacing: -.03em; text-transform: uppercase; }
-.adds__note { margin-top: 10px; font-size: 14px; line-height: 1.55; color: var(--mut); }
-.adds__list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
-.addon { padding: 20px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line2); }
-.addon__name { font-size: 18px; line-height: 1.15; letter-spacing: -.02em; }
-.addon__note { margin-top: 8px; font-size: 13.5px; line-height: 1.55; color: var(--mut); }
-.addon__tiers { margin: 14px 0 0; padding: 12px 0 0; border-top: 1px solid var(--line); list-style: none; }
-.addon__tiers li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 7px 0; }
-.addon__tiers li + li { border-top: 1px solid var(--line); }
-.addon__t { font-size: 14px; line-height: 1.35; }
-.addon__t em { display: block; margin-top: 3px; font-style: normal; font-size: 12.5px; color: var(--acc); }
-.addon__p { flex: none; font-family: var(--mono); font-weight: 700; font-size: 14px; letter-spacing: 0; color: var(--acc); }
 
 /* ---------------------------------------------------------------- shell */
 .shell { display: grid; grid-template-columns: var(--side) minmax(0, 1fr); min-height: 100vh; }
@@ -376,9 +359,7 @@ textarea.in { resize: vertical; min-height: 110px; }
   .intro__top { margin-bottom: 48px; }
   .intro__notes { grid-template-columns: 1fr; gap: 14px; }
   .plan { margin-top: 40px; }
-  .plan__grid, .plan__grid--side { grid-template-columns: 1fr; }
-  .adds { margin-top: 10px; }
-  .addon { padding: 18px; }
+  .plan__grid, .plan__grid--one { grid-template-columns: 1fr; }
   .plan__opt { padding: 20px; }
   .intro__by { margin-top: 52px; }
   .tgroups { grid-template-columns: 1fr; }

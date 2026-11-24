@@ -26,25 +26,6 @@ window.BRIEF = {
         pages: ["Home", "About", "Services", "General Dentistry", "Cosmetic Dentistry", "Implant Dentistry", "Orthodontic", "Oral Surgery", "Find Us"]
       }
     ],
-    /* Shown beside the plan. Change a price here and it changes on the form too. */
-    addons: {
-      label: "Add on",
-      title: "Two things you can add",
-      note: "Both are optional. Neither changes the price of the website itself, and nothing is charged until you say so.",
-      items: [
-        {
-          name: "Website maintenance",
-          note: "Any change, update or new page you want, done by me for the whole period. No hourly rate, no waiting on a quote.",
-          tiers: [{ label: "12 months", price: "RM1,000" }, { label: "6 months", price: "RM600" }]
-        },
-        {
-          name: "SEO content",
-          note: "Four articles a month, written, optimised and published on your blog. The pages that bring in people searching for a dentist before they know your name.",
-          tiers: [{ label: "12 months, 48 articles", price: "RM6,000", foot: "Works out to eight articles free" },
-                  { label: "6 months, 24 articles", price: "RM3,600" }]
-        }
-      ]
-    },
     foot: "Either way, every treatment you offer gets written up properly. That is what the rest of this form is for."
   },
 
@@ -59,30 +40,11 @@ window.BRIEF = {
      so it is already clear whose it is, and I have their numbers. */
   steps: [
     {
-      id: "addons", title: "The two add-ons",
-      lede: "They are on the opening screen. Pick one if you want it, or leave both. Nothing is locked in and nothing is charged until you say so.",
+      id: "pages", title: "The nine pages",
+      lede: "The plan is on the opening screen. Nine pages is a starting point, not a rule.",
       fields: [
-        { id: "add_care", type: "radio", label: "Website maintenance",
-          hint: "Any change, update or new page you want, done by me for the whole period.",
-          options: [
-            { label: "12 months, RM1,000" },
-            { label: "6 months, RM600" },
-            { label: "Not for now" },
-            { label: "Tell me more first" }
-          ] },
-        { id: "add_seo", type: "radio", label: "SEO content",
-          hint: "Four articles a month, written, optimised and published on your blog.",
-          options: [
-            { label: "12 months, 48 articles, RM6,000" },
-            { label: "6 months, 24 articles, RM3,600" },
-            { label: "Not for now" },
-            { label: "Tell me more first" }
-          ] },
         { id: "add_pages", type: "textarea", rows: 3, label: "Any page you want added, dropped or renamed?",
-          hint: "The nine pages are a starting point, not a rule.",
-          placeholder: "e.g. Drop Oral Surgery and put it under General. Add a page just for All-on-4. We would like a page for each dentist." },
-        { id: "add_ask", type: "textarea", rows: 2, label: "Anything you want to ask about either add-on?",
-          placeholder: "e.g. Does maintenance cover adding a new dentist to the site? Who decides what the articles are about?" }
+          placeholder: "e.g. Drop Oral Surgery and put it under General. Add a page just for All-on-4. We would like a page for each dentist." }
       ]
     },
 
@@ -263,6 +225,30 @@ window.BRIEF = {
         { id: "files_drive", type: "url", label: "Link to your materials", placeholder: "https://drive.google.com/",
           hint: "Google Drive, Dropbox, WeTransfer, a shared photo album, whatever you already use. Send me everything you have and I will pick what works: clinic photos, treatment photos, videos, logo files, old brochures, posters, anything from your socials. Nothing needs sorting first. Please set sharing to “Anyone with the link” so it opens." },
         { id: "files_notes", type: "textarea", rows: 2, label: "Anything I should know about what is in there", placeholder: "Which photos you like, what not to use, who is in them" }
+      ]
+    },
+
+    {
+      id: "addons", title: "Add on",
+      fields: [
+        { id: "add_care", type: "radio", label: "Website maintenance",
+          hint: "Any change, update or new page you want, done by me for the whole period. No hourly rate, no waiting on a quote.",
+          options: [
+            { label: "12 months, RM1,000" },
+            { label: "6 months, RM600" },
+            { label: "Not for now" },
+            { label: "Tell me more first" }
+          ] },
+        { id: "add_seo", type: "radio", label: "SEO content",
+          hint: "Four articles a month, written, optimised and published on your blog.",
+          options: [
+            { label: "12 months, 48 articles, RM4,200" },
+            { label: "6 months, 24 articles, RM2,400" },
+            { label: "Not for now" },
+            { label: "Tell me more first" }
+          ] },
+        { id: "add_ask", type: "textarea", rows: 2, label: "Anything you want to ask about either one?",
+          placeholder: "e.g. Does maintenance cover adding a new dentist to the site? Who decides what the articles are about?" }
       ]
     }
   ],

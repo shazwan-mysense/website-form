@@ -517,8 +517,7 @@
         h("h2", { class: "plan__title", text: P.title }),
         P.lede ? h("p", { class: "plan__lede", text: P.lede }) : null
       ]),
-      h("div", { class: "plan__grid" + (P.addons ? " plan__grid--side" : "") },
-        (P.options || []).map(planCard).concat(P.addons ? [addonBlock(P.addons)] : [])),
+      h("div", { class: "plan__grid" + ((P.options || []).length < 2 ? " plan__grid--one" : "") }, (P.options || []).map(planCard)),
       P.foot ? h("p", { class: "plan__foot", text: P.foot }) : null
     ]);
   }
@@ -540,29 +539,6 @@
         ]);
       })),
       h("p", { class: "plan__count", text: (o.pages || []).length + " pages" })
-    ]);
-  }
-
-  /* the optional extras, stacked down the side of the plan */
-  function addonBlock(A) {
-    return h("aside", { class: "adds", "aria-label": A.title || "Add on" }, [
-      h("div", { class: "adds__head" }, [
-        A.label ? h("span", { class: "lbl" }, [h("i", { class: "sq", "aria-hidden": "true" }), h("span", { class: "adds__kick", text: A.label })]) : null,
-        A.title ? h("h3", { class: "adds__title", text: A.title }) : null,
-        A.note ? h("p", { class: "adds__note", text: A.note }) : null
-      ]),
-      h("div", { class: "adds__list" }, (A.items || []).map(function (it) {
-        return h("article", { class: "addon" }, [
-          h("h4", { class: "addon__name", text: it.name }),
-          it.note ? h("p", { class: "addon__note", text: it.note }) : null,
-          h("ul", { class: "addon__tiers" }, (it.tiers || []).map(function (t) {
-            return h("li", null, [
-              h("span", { class: "addon__t" }, [t.label, t.foot ? h("em", { text: t.foot }) : null]),
-              h("span", { class: "addon__p", text: t.price })
-            ]);
-          }))
-        ]);
-      }))
     ]);
   }
 
