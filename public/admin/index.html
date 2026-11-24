@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en-MY">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Briefs</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prata&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/brief.css">
+<style>
+  .ad { max-width: 920px; margin: 0 auto; padding: 48px 20px 96px; }
+  .ad__top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 36px; }
+  .ad__top h1 { font-size: 34px; }
+  .ad__login { max-width: 420px; margin: 18vh auto 0; padding: 0 20px; }
+  .ad__login h1 { font-size: 34px; margin-bottom: 22px; }
+  .ad__login form { display: flex; flex-direction: column; gap: 14px; }
+  .ad__err { color: var(--warn); font-size: 14px; min-height: 20px; }
+  .rows { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: center; padding: 18px 20px; border: 0; border-radius: var(--r); background: var(--field); box-shadow: var(--lift); text-align: left; transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+  .row:hover { transform: translateY(-2px); box-shadow: var(--lift-hi); }
+  .row__t { font-family: var(--head); font-size: 20px; color: var(--ink); }
+  .row__m { grid-column: 1; font-size: 14px; color: var(--ink-soft); }
+  .pill { grid-row: 1 / span 2; grid-column: 2; padding: 5px 12px; border-radius: 30px; font-size: 13px; background: var(--acc-tint); color: var(--acc-deep); }
+  .pill--ok { background: #e3ebe0; color: var(--ok); }
+  .doc { display: flex; flex-direction: column; gap: 34px; }
+  .doc__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; padding: 24px; border-radius: var(--r); background: var(--field); box-shadow: var(--lift); }
+  .doc__head h2 { font-size: 28px; }
+  .doc__meta { margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.7; }
+  .doc__acts { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-start; }
+  .sec h3 { font-size: 24px; margin-bottom: 14px; }
+  .qa { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 6px 24px; padding: 14px 0; box-shadow: inset 0 -1px 0 rgba(134, 85, 67, .12); }
+  .qa__q { font-size: 14.5px; color: var(--ink-soft); }
+  .qa__a { font-size: 15.5px; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .qa__a a { overflow-wrap: anywhere; }
+  .sub { margin: 8px 0 4px; padding: 14px 18px; border-radius: 12px; background: var(--bg-2); }
+  .sub h4 { margin: 0 0 6px; font-family: var(--head); font-weight: 400; font-size: 18px; color: var(--ink); }
+  .sub .qa { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); padding: 9px 0; }
+  .skipped { margin-top: 10px; font-size: 13.5px; color: var(--ink-soft); }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 11px 18px; border-radius: 30px; background: var(--ink); color: #fff; font-size: 14px; }
+  @media (max-width: 700px) { .qa, .sub .qa { grid-template-columns: 1fr; gap: 2px; } .ad { padding-top: 28px; } }
+</style>
+</head>
+<body>
+<div id="ad"></div>
+<script src="/admin/admin.js" defer></script>
+</body>
+</html>
