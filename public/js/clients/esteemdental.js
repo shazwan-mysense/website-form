@@ -10,8 +10,8 @@ window.BRIEF = {
   by: "Shazwan Sites",
   contact: { email: "zebwan00@gmail.com", whatsapp: "" },
   maxMB: 50,
-  /* the lockup from mhdshazwn.com, with the clinic named underneath */
-  mark: '<span class="mark"><span class="n">Shazwan&#169;</span><span class="s">Esteem Dental</span></span>',
+  /* the lockup from mhdshazwn.com, with the clinic's own wordmark underneath */
+  mark: '<span class="mark"><span class="n">Shazwan&#169;</span><img class="mark__logo" src="/img/esteem-dental.png" alt="Esteem Dental" width="862" height="445"></span>',
 
   /* The opening screen pitches before it asks: the page plan, with the add-ons beside it. */
   plan: {
@@ -230,6 +230,7 @@ window.BRIEF = {
 
     {
       id: "addons", title: "Add on",
+      lede: "Anything you pick here goes into the quotation I send you. Leave both if you would rather just have the website.",
       fields: [
         { id: "add_care", type: "radio", label: "Website maintenance",
           hint: "Any change, update or new page you want, done by me for the whole period. No hourly rate, no waiting on a quote.",
@@ -258,14 +259,17 @@ window.BRIEF = {
     lede: "Check the sections below. Anything you skipped can be sorted out on a call.",
     fields: [
       { id: "end_when", type: "radio", label: "When would you like the new site to go live?", options: [{ label: "Within a month" }, { label: "In one to two months" }, { label: "In three months or more" }, { label: "No fixed date" }] },
-      { id: "end_more", type: "textarea", rows: 3, label: "Anything else I should know?",
-        placeholder: "e.g. We are adding a second branch next year. Dr X is away until February. We would like the site up before Raya." },
+      { id: "end_more", type: "textarea", rows: 4, label: "Your comments",
+        hint: "Anything at all. A worry, a question, something you forgot earlier, something you disagree with.",
+        placeholder: "e.g. We are adding a second branch next year. Dr X is away until February. We would like the site up before Raya. We are not sure about dropping the Oral Surgery page." },
+      { id: "end_quote", type: "consent", label: "Confirm the plan. I am happy with the nine pages, and with anything I ticked under Add on. Please send the quotation.",
+        hint: "Ticking this is not a contract. It tells me the plan is agreed so I can put a price to it." },
       { id: "end_ok", type: "consent", required: true, label: "We are happy for Shazwan Sites to use these answers and files to plan and build our website." }
     ]
   },
 
   done: {
     title: "Thank you. Everything is in.",
-    lede: "I will read through it and come back to you with a page plan and the first homepage draft."
+    lede: "I will read through it and come back to you with a page plan, the first homepage draft and a quotation."
   }
 };

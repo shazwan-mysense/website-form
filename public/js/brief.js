@@ -230,7 +230,7 @@
       var c = h("button", { type: "button", class: "consent", role: "checkbox", id: id, "aria-checked": store[f.id] ? "true" : "false",
         onclick: function () { store[f.id] = !store[f.id]; c.setAttribute("aria-checked", store[f.id] ? "true" : "false"); unflag(c); save(); } },
         [h("span", { class: "box", "aria-hidden": "true" }), h("span", { text: f.label })]);
-      return wrap({ type: "consent", id: f.id, required: f.required }, path, c);
+      return wrap({ type: "consent", id: f.id, required: f.required, hint: f.hint }, path, c);
     }
     if (t === "repeat") return repeat(f, store, path);
     if (t === "cards") return cards(f, store, path);
@@ -584,7 +584,7 @@
 
     var back = btn({ text: "Back", kind: "muted btn--back", onclick: function () { i > 0 ? go(i - 1) : intro(); } });
     var next = s.review
-      ? btn({ text: "Send the brief", sub: "/" + B.name, onclick: send })
+      ? btn({ text: "Confirm and send", sub: "/" + B.name, onclick: send })
       : btn({ text: i === steps.length - 2 ? "Review and send" : "Continue", sub: "/" + (i + 2) + " of " + steps.length, onclick: function () {
           var m = missing(i);
           if (m) { flag(m); return; }
