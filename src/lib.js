@@ -1,13 +1,17 @@
 /* Shared by every Pages Function. Storage layout in the R2 bucket (binding FILES):
      briefs/<client>/<id>/answers.json   the answers + status
-     briefs/<client>/<id>/files/<name>   uploads (50 MB per brief in total)
+     briefs/<client>/<id>/files/<name>   uploads (95 MB a file, 500 MB per brief)
      drafts/<client>/<id>.json           a part-finished brief, reopened with a resume link
    Secrets: BRIEF_SECRET signs upload tokens and the admin cookie; ADMIN_PASS opens /admin/. */
 
 export const CLIENTS = {
   esteemdental: { name: "Esteem Dental", hosts: ["edcform.mhdshazwn.com"] }
 };
-export const MAX_TOTAL = 50 * 1024 * 1024;
+/* Cloudflare refuses a request body over 100 MB on the Free and Pro plans, and every
+   file is one PUT, so 95 MB is the most a single file can be. The per-brief total is
+   ours to choose: R2 does not care, so it is set wide enough never to be hit. */
+export const MAX_FILE = 95 * 1024 * 1024;
+export const MAX_TOTAL = 500 * 1024 * 1024;
 export const MAX_ANSWERS = 400 * 1024;
 export const EXT = /\.(zip|jpe?g|png|webp|heic|heif|gif|svg|pdf|ai|eps|psd|mp4|mov)$/i;
 export const ID = /^\d{8}-\d{4}-[a-z0-9]{6}$/;

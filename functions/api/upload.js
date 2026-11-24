@@ -1,5 +1,5 @@
-// PUT /api/upload?id=&t=&name=   body = the file   (one file per request, 50 MB per brief in total)
-import { json, bad, clientFor, sameOrigin, checkToken, safeName, listAll, EXT, ID, MAX_TOTAL } from "../../src/lib.js";
+// PUT /api/upload?id=&t=&name=   body = the file   (one file per request, 95 MB a file, 500 MB per brief)
+import { json, bad, clientFor, sameOrigin, checkToken, safeName, listAll, EXT, ID, MAX_FILE, MAX_TOTAL } from "../../src/lib.js";
 
 export async function onRequestPut({ request, env }) {
   if (!sameOrigin(request)) return bad("Not allowed", 403);
@@ -12,12 +12,12 @@ export async function onRequestPut({ request, env }) {
   if (!EXT.test(name)) return bad("Only photos, zip, PDF and design files can be uploaded");
   const size = +request.headers.get("content-length");
   if (!size || !request.body) return bad("Empty file");
-  if (size > MAX_TOTAL) return bad("This file is over 50 MB. Please share it through Google Drive.", 413);
+  if (size > MAX_FILE) return bad("This file is over 95 MB, which is more than the upload can take. Please share it through Google Drive.", 413);
 
   const prefix = `briefs/${client}/${id}/files/`;
   const have = await listAll(env.FILES, prefix);
   const used = have.reduce((s, o) => s + o.size, 0);
-  if (used + size > MAX_TOTAL) return bad("That would take this brief over 50 MB. Please share the rest through Google Drive.", 413);
+  if (used + size > MAX_TOTAL) return bad("That would take this brief over 500 MB. Please share the rest through Google Drive.", 413);
 
   let key = prefix + name, n = 1;
   const taken = new Set(have.map((o) => o.key));

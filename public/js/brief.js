@@ -392,7 +392,7 @@
   }
 
   function filesField(f, path) {
-    var max = (B.maxMB || 50) * MB;
+    var max = (B.maxMB || 500) * MB, maxOne = (B.maxFileMB || 95) * MB;
     var input = h("input", { type: "file", multiple: true, id: "f-" + path, accept: "image/*,.zip,.pdf,.ai,.eps,.psd,.svg,.heic,.heif,.mp4,.mov", "aria-describedby": "f-" + path + "-h" });
     var drop = h("div", { class: "drop" }, [
       h("span", { class: "drop__ic", "aria-hidden": "true", html: ICON.up }),
@@ -410,8 +410,8 @@
       var t = total();
       bar.style.width = Math.min(100, t / max * 100) + "%";
       meter.classList.toggle("is-full", t > max * .9);
-      used.textContent = files.length ? size(t) + " of " + (B.maxMB || 50) + " MB used" : "Nothing added yet";
-      left.textContent = files.length ? size(Math.max(0, max - t)) + " left" : (B.maxMB || 50) + " MB in total";
+      used.textContent = files.length ? size(t) + " added" : "Nothing added yet";
+      left.textContent = files.length ? plural(files.length, "file", "files") : "";
       list.innerHTML = "";
       files.forEach(function (file, i) {
         list.appendChild(h("li", null, [h("span", { class: "flist__n", text: file.name }), h("span", { class: "flist__s", text: size(file.size) }),
@@ -424,13 +424,14 @@
       Array.prototype.forEach.call(fl, function (file) {
         if (!EXT.test(file.name)) { msgs.push(file.name + " is not a photo, zip, PDF or design file, so it was left out."); return; }
         if (files.some(function (x) { return x.name === file.name && x.size === file.size; })) return;
-        if (total() + file.size > max) { tooBig = true; msgs.push(file.name + " (" + size(file.size) + ") would take you over " + (B.maxMB || 50) + " MB."); return; }
+        if (file.size > maxOne) { tooBig = true; msgs.push(file.name + " (" + size(file.size) + ") is too big to upload here."); return; }
+        if (total() + file.size > max) { tooBig = true; msgs.push(file.name + " (" + size(file.size) + ") would take you past " + (B.maxMB || 500) + " MB."); return; }
         files.push(file);
       });
       if (lost) { lost.remove(); lost = null; }
       alert.innerHTML = "";
       if (msgs.length) {
-        alert.appendChild(h("div", { class: "alert" }, [msgs.join(" "), tooBig ? " Please put the bigger files in Google Drive and paste the link below." : ""]));
+        alert.appendChild(h("div", { class: "alert" }, [msgs.join(" "), tooBig ? " Please put that one in Google Drive and paste the link below." : ""]));
         if (tooBig) flash("files_drive");
       }
       remember(); paint(); progress();

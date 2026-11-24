@@ -9,7 +9,8 @@ window.BRIEF = {
   doc: "Website brief",
   by: "Shazwan Sites",
   contact: { email: "zebwan00@gmail.com", whatsapp: "" },
-  maxMB: 50,
+  maxMB: 500,
+  maxFileMB: 95,
   /* the lockup from mhdshazwn.com, with the clinic's own wordmark underneath */
   mark: '<span class="mark"><span class="n">Shazwan&#169;</span><img class="mark__logo" src="/img/esteem-dental.png" alt="Esteem Dental" width="862" height="445"></span>',
 
@@ -67,8 +68,6 @@ window.BRIEF = {
           hint: "One per line. Year opened, how many dentists, patients treated, implants placed, your Google rating. Roughly is fine, and skip any you would rather leave off. I print them exactly as you write them." },
         { id: "home_button", type: "radio", label: "What should the main button do?",
           options: [{ label: "Open WhatsApp" }, { label: "Call the clinic" }, { label: "Open our online booking system", more: "Link to the booking system" }, { label: "Open a booking form on the website" }] },
-        { id: "home_extra", type: "textarea", rows: 3, label: "Anything else you want on the homepage?",
-          placeholder: "e.g. A section on our Megagen R2Gate centre. A note that we are open on Sundays. The video we made for Hari Raya." }
       ]
     },
 
@@ -182,15 +181,12 @@ window.BRIEF = {
         { id: "visit_email", type: "radio", label: "Email for enquiries",
           quote: "info@esteemdentalclinic.com",
           options: [{ label: "Correct" }, { label: "Change it", more: "Email" }] },
-        { id: "visit_book", type: "chips", label: "How do patients book today?", options: ["WhatsApp", "Phone call", "Walk-in", "Online booking system"], other: "Other" },
         { id: "visit_ig", type: "url", label: "Instagram", placeholder: "https://", half: true },
         { id: "visit_fb", type: "url", label: "Facebook", placeholder: "https://", half: true },
         { id: "visit_tt", type: "url", label: "TikTok", placeholder: "https://", half: true },
         { id: "visit_xhs", type: "url", label: "Xiaohongshu", placeholder: "https://", half: true },
         { id: "visit_langs", type: "radio", label: "Which languages should the website be in?",
           options: [{ label: "English only" }, { label: "English and Bahasa Melayu" }, { label: "English, Bahasa Melayu and Chinese" }] },
-        { id: "visit_domain", type: "textarea", rows: 2, label: "Who looks after your domain and hosting today?", hint: "Your current site was built by Omna Studio. Do you still work with them, and who has the domain login?",
-          placeholder: "e.g. Omna Studio built it and still hosts it. Our manager has the login. Or just: not sure, we will find out." }
       ]
     },
 
@@ -198,8 +194,6 @@ window.BRIEF = {
       id: "look", title: "Look and feel",
       lede: "How the new site should feel when someone opens it.",
       fields: [
-        { id: "look_guide", type: "radio", label: "Brand guide", hint: "I have the guide you shared for the All-on-X page: cream, warm brown and the Prata typeface.",
-          options: [{ label: "Still the same" }, { label: "Some things changed", more: "What changed? Upload the new guide in the last section." }, { label: "We would like a fresh look" }] },
         { id: "look_words", type: "chips", label: "Pick up to three words for the feel", max: 3,
           options: ["Calm", "Warm", "Premium", "Friendly", "Modern", "Clean", "Gentle", "Family", "Bright", "Confident"] },
         { id: "look_refs", type: "repeat", min: 1, max: 6, item: "Website", add: "Add another website", compact: true,
@@ -208,8 +202,6 @@ window.BRIEF = {
             { id: "url", type: "url", label: "Link", placeholder: "https://" },
             { id: "why", type: "text", label: "What you like about it", placeholder: "Clean, lots of white space, easy to find the treatments" }
           ] },
-        { id: "look_keep", type: "textarea", rows: 2, label: "Anything on the current site you want to keep?",
-          placeholder: "e.g. The logo and the colours. The photo of the reception. The way the treatments are grouped." },
         { id: "look_avoid", type: "textarea", rows: 2, label: "Anything you do not want on the new site?",
           placeholder: "e.g. No stock photos of models with perfect teeth. Nothing that pops up over the page. No before and after photos on the homepage." }
       ]
@@ -219,37 +211,30 @@ window.BRIEF = {
       id: "files", title: "Photos and files",
       lede: "Real photos of your clinic and team make the biggest difference. Phone photos are fine if they are sharp and well lit.",
       fields: [
-        { id: "files_have", type: "chips", label: "Which of these can you send?", hint: "Tick what you have. It tells me what to plan around.",
-          options: ["Clinic entrance and signage", "Reception and waiting area", "Treatment rooms", "Equipment", "A portrait of each dentist", "Team photo", "Before and after cases", "Logo files", "Brand guide"] },
-        { id: "files_upload", type: "files", label: "Upload photos or a zip file", hint: "Up to 50 MB in total. Anything bigger is easier as a link, below." },
+        { id: "files_upload", type: "files", label: "Upload photos or a zip file", hint: "Up to 95 MB a file. Anything bigger is easier as a link, below." },
         { id: "files_drive", type: "url", label: "Link to your materials", placeholder: "https://drive.google.com/",
-          hint: "Google Drive, Dropbox, WeTransfer, a shared photo album, whatever you already use. Send me everything you have and I will pick what works: clinic photos, treatment photos, videos, logo files, old brochures, posters, anything from your socials. Nothing needs sorting first. Please set sharing to “Anyone with the link” so it opens." },
-        { id: "files_notes", type: "textarea", rows: 2, label: "Anything I should know about what is in there", placeholder: "Which photos you like, what not to use, who is in them" }
+          hint: "Google Drive, Dropbox, WeTransfer, whatever you already use. Send everything you have and I will pick what works. Nothing needs sorting first. Please set sharing to “Anyone with the link” so it opens." },
       ]
     },
 
     {
       id: "addons", title: "Add on",
-      lede: "Anything you pick here goes into the quotation I send you. Leave both if you would rather just have the website.",
+      lede: "Anything you pick goes into the quotation.",
       fields: [
         { id: "add_care", type: "radio", label: "Website maintenance",
-          hint: "Any change, update or new page you want, done by me for the whole period. No hourly rate, no waiting on a quote.",
+          hint: "Any update or change to the website is on me for the whole period.",
           options: [
-            { label: "12 months, RM1,000" },
-            { label: "6 months, RM600" },
-            { label: "Not for now" },
-            { label: "Tell me more first" }
+            { label: "RM1,000 (12 months)" },
+            { label: "RM600 (6 months)" },
+            { label: "Not for now" }
           ] },
         { id: "add_seo", type: "radio", label: "SEO content",
-          hint: "Four articles a month, written, optimised and published on your blog. The year is RM300 a month against RM333, so it comes to RM400 less than two six-month runs.",
+          hint: "Four new articles a month, written and published for you.",
           options: [
-            { label: "12 months, 48 articles, RM3,600" },
-            { label: "6 months, 24 articles, RM2,000" },
-            { label: "Not for now" },
-            { label: "Tell me more first" }
-          ] },
-        { id: "add_ask", type: "textarea", rows: 2, label: "Anything you want to ask about either one?",
-          placeholder: "e.g. Does maintenance cover adding a new dentist to the site? Who decides what the articles are about?" }
+            { label: "RM3,600 (12 months, 48 articles)" },
+            { label: "RM2,000 (6 months, 24 articles)" },
+            { label: "Not for now" }
+          ] }
       ]
     }
   ],
