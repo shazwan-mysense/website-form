@@ -240,10 +240,10 @@ window.BRIEF = {
             { label: "Tell me more first" }
           ] },
         { id: "add_seo", type: "radio", label: "SEO content",
-          hint: "Four articles a month, written, optimised and published on your blog.",
+          hint: "Four articles a month, written, optimised and published on your blog. The year is RM300 a month against RM333, so it comes to RM400 less than two six-month runs.",
           options: [
-            { label: "12 months, 48 articles, RM4,200" },
-            { label: "6 months, 24 articles, RM2,400" },
+            { label: "12 months, 48 articles, RM3,600" },
+            { label: "6 months, 24 articles, RM2,000" },
             { label: "Not for now" },
             { label: "Tell me more first" }
           ] },
