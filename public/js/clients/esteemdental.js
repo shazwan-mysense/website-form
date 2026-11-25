@@ -11,8 +11,8 @@ window.BRIEF = {
   contact: { email: "zebwan00@gmail.com", whatsapp: "" },
   maxMB: 500,
   maxFileMB: 95,
-  /* the lockup from mhdshazwn.com, with the clinic's own wordmark underneath */
-  mark: '<span class="mark"><span class="n">Shazwan&#169;</span><img class="mark__logo" src="/img/esteem-dental.png" alt="Esteem Dental" width="862" height="445"></span>',
+  /* the lockup from mhdshazwn.com */
+  mark: '<span class="mark"><span class="n">Shazwan&#169;</span><span class="s">Sites</span></span>',
 
   /* The opening screen pitches before it asks: the page plan, with the add-ons beside it. */
   plan: {
@@ -114,14 +114,69 @@ window.BRIEF = {
     },
 
     {
+      id: "kit", title: "Your equipment",
+      lede: "The machines are only worth a mention if the patient can tell what they get out of them. Tell me what you have and I will write that part.",
+      fields: [
+        { id: "kit_line", type: "radio", label: "Your Services page carries this line. Keep it on the new site?",
+          quote: "Esteem Dental Clinic is the only Megagen R2Gate implant centre in Malaysia",
+          options: [{ label: "Keep it as it is" }, { label: "Keep it, but word it differently", more: "How should it read?" }, { label: "Leave it off" }] },
+        { id: "kit_items", type: "repeat", min: 1, max: 12, item: "Equipment", add: "Add another piece of equipment", compact: true,
+          label: "Any equipment you want people to know you use?",
+          hint: "Skip it if you would rather not list any.",
+          fields: [
+            { id: "name", type: "text", label: "What is it", ex: true, placeholder: [
+              "Megagen R2Gate guided implant surgery",
+              "3D CBCT scanner",
+              "Intraoral scanner",
+              "Same-day crown milling machine",
+              "Digital X-ray"
+            ] },
+            { id: "good", type: "textarea", rows: 2, label: "What does it mean for the patient", placeholder: [
+              "e.g. The implant position is planned on a 3D scan and placed through a guide, so it goes exactly where we decided. Less cutting, less swelling, and you are back to normal faster.",
+              "e.g. We see the bone in three dimensions before we touch anything, so there are no surprises halfway through.",
+              "e.g. No putty, no gagging. A small camera takes the impression in a few minutes.",
+              "e.g. The crown is milled here, so most people walk out with the finished tooth the same day instead of waiting two weeks.",
+              "e.g. Far less radiation than old film, and the image is on the screen beside you while we explain it."
+            ] }
+          ] }
+      ]
+    },
+
+    {
       id: "faq", title: "Questions patients ask",
       lede: "The ones your team answers on WhatsApp every week. Three is enough to start.",
       fields: [
         { id: "faq_items", type: "repeat", min: 3, max: 20, item: "Question", add: "Add another question", compact: true,
           fields: [
-            { id: "q", type: "text", label: "Question", placeholder: "Do you take walk-ins?" },
-            { id: "a", type: "textarea", rows: 2, label: "Your usual answer",
-              placeholder: "e.g. We do, but an appointment is safer. Walk-ins are seen when there is a gap, and on Saturdays that can mean a long wait." }
+            /* a fresh suggestion on every row, so a blank mind still has somewhere to go */
+            { id: "q", type: "text", label: "Question", ex: true, placeholder: [
+              "Do you take walk-ins?",
+              "How much is a scaling and polishing?",
+              "Do you see children?",
+              "Can I pay in instalments?",
+              "I am nervous about the dentist. What do you do about that?",
+              "How long does a whitening appointment take?",
+              "Do I need a referral for implants?",
+              "Is the first consultation charged?",
+              "Can I claim through my company panel?",
+              "How often should I come for a check-up?",
+              "Do I have to be put to sleep for a wisdom tooth?",
+              "Is there parking?"
+            ] },
+            { id: "a", type: "textarea", rows: 2, label: "Your usual answer", placeholder: [
+              "e.g. We do, but an appointment is safer. Walk-ins are seen when there is a gap, and on Saturdays that can mean a long wait.",
+              "e.g. It starts at RM120 and takes about forty minutes. If there is a lot of staining it can run to RM180, and we tell you before we start.",
+              "e.g. From about three years old. The first visit is a ride in the chair and a count of the teeth, nothing more.",
+              "e.g. Yes, on treatments over RM1,000, through our instalment plan. Nothing extra is charged for spreading it out.",
+              "e.g. Tell us when you book and we will give you a longer slot. Nothing happens until you say you are ready, and you can stop us at any point by raising a hand.",
+              "e.g. About an hour in the chair. Most people come twice, a week apart, and the colour settles after a few days.",
+              "e.g. No. Come in for a scan and we will tell you honestly whether an implant is the right answer for you.",
+              "e.g. The first consultation is RM50, and it comes off the treatment if you go ahead with us.",
+              "e.g. Yes, we are on several company panels. Bring your card and we will check it for you before anything starts.",
+              "e.g. Once every six months for most people. If your gums bleed when you brush, come sooner.",
+              "e.g. Almost never. It is done under local, you are awake, and it usually takes twenty minutes.",
+              "e.g. Yes, free parking in the building and more on the street in front."
+            ] }
           ] }
       ]
     },

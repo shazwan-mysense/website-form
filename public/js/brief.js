@@ -66,7 +66,7 @@
   }
   function str(v) { return typeof v === "string" ? v.trim() : ""; }
   /* mono caps suit a short cue like "+60"; a worked example has to read like a sentence */
-  function inCls(ph) { return "in" + (ph && String(ph).length > 26 ? " in--ex" : ""); }
+  function inCls(ph, ex) { return "in" + (ex || (ph && String(ph).length > 26) ? " in--ex" : ""); }
   function size(n) { return n >= MB ? (n / MB).toFixed(n >= 10 * MB ? 0 : 1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB"; }
   function total() { return files.reduce(function (s, f) { return s + f.size; }, 0); }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
@@ -200,7 +200,7 @@
     path = path || f.id;
     var id = "f-" + path, t = f.type;
     if (t === "text" || t === "email" || t === "tel" || t === "url") {
-      var inp = h("input", { class: inCls(f.placeholder), id: id, type: t === "url" ? "url" : t, value: store[f.id] || "", placeholder: f.placeholder || null,
+      var inp = h("input", { class: inCls(f.placeholder, f.ex), id: id, type: t === "url" ? "url" : t, value: store[f.id] || "", placeholder: f.placeholder || null,
         autocomplete: f.autocomplete || "off", inputmode: f.inputmode || (t === "url" ? "url" : null), "aria-describedby": f.hint ? id + "-h" : null,
         oninput: function () { store[f.id] = inp.value; unflag(inp); save(); },
         onblur: function () {
@@ -292,6 +292,16 @@
     return box;
   }
 
+  /* A repeat field may give its placeholder as a list, one example per row, so somebody
+     adding a fourth question is shown a fourth idea rather than the same one again. */
+  function atRow(sf, i) {
+    if (!Array.isArray(sf.placeholder)) return sf;
+    var c = {}, k;
+    for (k in sf) if (Object.prototype.hasOwnProperty.call(sf, k)) c[k] = sf[k];
+    c.placeholder = sf.placeholder[i % sf.placeholder.length];
+    return c;
+  }
+
   function repeat(f, store, path) {
     var list = Array.isArray(store[f.id]) ? store[f.id] : (store[f.id] = []);
     while (list.length < (f.min || 1)) list.push({});
@@ -299,7 +309,7 @@
     function draw(focusLast) {
       reps.innerHTML = "";
       list.forEach(function (it, i) {
-        var g = h("div", { class: "fields" }, f.fields.map(function (sf) { return field(sf, it, path + "-" + i + "-" + sf.id); }));
+        var g = h("div", { class: "fields" }, f.fields.map(function (sf) { return field(atRow(sf, i), it, path + "-" + i + "-" + sf.id); }));
         reps.appendChild(h("div", { class: "rep" + (f.compact ? " rep--compact" : "") }, [
           h("div", { class: "rep__head" }, [
             h("p", { class: "rep__title", text: f.item + " " + (i + 1) }),
@@ -485,7 +495,7 @@
       return typeof v === "string" ? !!v.trim() : Array.isArray(v) ? v.length : v && typeof v === "object" ? (v.picked ? v.picked.length : false) : !!v;
     });
     var last = steps.findIndex(function (s) { return s.id === state.step; });
-    var go1 = btn({ text: has ? "Continue" : "Start the brief", sub: has ? "/Where you left off" : "/" + B.name,
+    var go1 = btn({ text: has ? "Continue" : "Start the brief", sub: has ? "/Where you left off" : "/" + B.doc,
       onclick: function () { go(has && last > -1 ? last : 0); } });
     var sent = state.sent ? h("p", { class: "intro__back", text: "You sent a brief on " + new Date(state.sent.at).toLocaleDateString("en-MY", { day: "numeric", month: "long" }) + " (reference " + state.sent.id + "). Anything new can go in another one." }) : null;
     var over = has ? h("button", { type: "button", class: "link link--soft", text: "Start over", onclick: function () {
@@ -585,7 +595,7 @@
 
     var back = btn({ text: "Back", kind: "muted btn--back", onclick: function () { i > 0 ? go(i - 1) : intro(); } });
     var next = s.review
-      ? btn({ text: "Confirm and send", sub: "/" + B.name, onclick: send })
+      ? btn({ text: "Confirm and send", onclick: send })
       : btn({ text: i === steps.length - 2 ? "Review and send" : "Continue", sub: "/" + (i + 2) + " of " + steps.length, onclick: function () {
           var m = missing(i);
           if (m) { flag(m); return; }
