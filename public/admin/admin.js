@@ -41,15 +41,20 @@
   function list() {
     api("list").then(function (j) {
       var rows = j.briefs.map(function (b) {
-        return h("button", { type: "button", class: "row", onclick: function () { open(b.client, b.id); } }, [
-          h("span", { class: "row__t", text: b.clientName + (b.name ? " · " + b.name : "") }),
-          h("span", { class: "pill" + (b.status === "complete" ? " pill--ok" : ""), text: b.status === "complete" ? "Complete" : "Files still uploading" }),
-          h("span", { class: "row__m", text: when(b.createdAt) + (b.role ? " · " + b.role : "") + " · " + (b.files ? b.files + " files, " + size(b.bytes) : "no files") })
+        var draft = b.kind === "draft";
+        var pill = draft ? "Still filling in" : b.status === "complete" ? "Sent" : "Files still uploading";
+        var meta = draft
+          ? "Last saved " + when(b.at) + " · " + b.answered + " answered so far"
+          : when(b.at) + " · " + (b.files ? b.files + " files, " + size(b.bytes) : "no files");
+        return h("button", { type: "button", class: "row" + (draft ? " row--draft" : ""), onclick: function () { open(b.client, b.id); } }, [
+          h("span", { class: "row__t", text: b.clientName }),
+          h("span", { class: "pill" + (!draft && b.status === "complete" ? " pill--ok" : "") + (draft ? " pill--draft" : ""), text: pill }),
+          h("span", { class: "row__m", text: meta })
         ]);
       });
       show(h("div", { class: "ad" }, [
         h("div", { class: "ad__top" }, [h("h1", { text: "Briefs" }), h("button", { type: "button", class: "link link--soft", text: "Log out", onclick: function () { api("logout", { method: "POST" }).then(login); } })]),
-        rows.length ? h("div", { class: "rows" }, rows) : h("p", { class: "empty", text: "No briefs yet." })
+        rows.length ? h("div", { class: "rows" }, rows) : h("p", { class: "empty", text: "Nothing yet. A brief appears here as soon as somebody starts one, not only when they send it." })
       ]));
       if (history.state) history.replaceState(null, "", location.pathname);
     }).catch(function () {});
@@ -107,11 +112,11 @@
           if (val) items.push({ q: label, a: val, url: f.type === "url" }); else skipped.push(label);
         }
       });
-      return { title: s.title, items: items, skipped: skipped };
+      return { title: s.title, items: items, skipped: skipped, done: items.length, total: items.length + skipped.length };
     });
   }
   function asText(B, rec, secs) {
-    var out = [B.name + " website brief", "Reference " + rec.id + ", sent " + when(rec.createdAt), ""];
+    var out = [B.name + " website brief", "Reference " + rec.id + ", " + (rec.kind === "draft" ? "still being filled in, last saved " : "sent ") + when(rec.createdAt), ""];
     secs.forEach(function (s) {
       if (!s.items.length) return;
       out.push("## " + s.title, "");
@@ -130,27 +135,32 @@
       if (!B) { toast("The question file for " + client + " is missing"); return; }
       var a = rec.answers || {}, secs = build(B, rec, files);
       var phone = str(a.you_phone).replace(/\D/g, "");
+      var draft = rec.kind === "draft" || rec.status === "draft";
+      var done = secs.reduce(function (n, x) { return n + x.done; }, 0);
+      var all = secs.reduce(function (n, x) { return n + x.total; }, 0);
+      var left = secs.filter(function (x) { return x.done < x.total; }).map(function (x) { return x.title; });
       var head = h("div", { class: "doc__head" }, [
         h("div", null, [h("h2", { text: B.name + (a.you_name ? " · " + a.you_name : "") }),
           h("p", { class: "doc__meta" }, [
-            (a.you_role ? a.you_role + " · " : "") + when(rec.createdAt), h("br"),
-            phone ? h("a", { href: "https://wa.me/" + (phone.indexOf("0") === 0 ? "6" + phone : phone), target: "_blank", rel: "noopener", text: "WhatsApp " + a.you_phone }) : null,
-            a.you_email ? " · " : null, a.you_email ? h("a", { href: "mailto:" + a.you_email, text: a.you_email }) : null, h("br"),
-            "Reference " + rec.id + " · " + (rec.status === "complete" ? "complete" : "files still uploading")
+            draft ? "Still filling in. Last saved " + when(rec.createdAt) : "Sent " + when(rec.createdAt), h("br"),
+            h("strong", { text: done + " of " + all + " questions answered" }),
+            draft && left.length ? h("br") : null,
+            draft && left.length ? "Nothing yet in: " + left.join(", ") : null, h("br"),
+            "Reference " + rec.id + (draft ? "" : " · " + (rec.status === "complete" ? "complete" : "files still uploading"))
           ])]),
         h("div", { class: "doc__acts" }, [
           h("button", { type: "button", class: "btn btn--pri", onclick: function () {
             navigator.clipboard.writeText(asText(B, rec, secs)).then(function () { toast("Copied as text"); }, function () { toast("Copy failed"); });
           } }, [h("i", { "aria-hidden": "true", text: "↗" }), "Copy as text"]),
           h("button", { type: "button", class: "btn btn--soft", text: "Delete", onclick: function () {
-            if (!confirm("Delete this brief and its " + files.length + " files? This cannot be undone.")) return;
+            if (!confirm(draft ? "Delete this part-finished brief? Their resume link will stop working, and this cannot be undone." : "Delete this brief and its " + files.length + " files? This cannot be undone.")) return;
             api("brief?c=" + encodeURIComponent(client) + "&id=" + encodeURIComponent(id), { method: "DELETE" }).then(function () { toast("Deleted"); list(); });
           } })
         ])
       ]);
       var body = secs.map(function (s) {
         if (!s.items.length && !s.skipped.length) return null;
-        return h("section", { class: "sec" }, [h("h3", { text: s.title })].concat(s.items.map(function (it) {
+        return h("section", { class: "sec" }, [h("h3", null, [s.title, h("span", { class: "sec__n", text: s.done + " of " + s.total })])].concat(s.items.map(function (it) {
           if (it.sub) return h("div", { class: "qa" }, [h("span", { class: "qa__q", text: it.q }), h("div", null, it.sub.map(function (sb) {
             return h("div", { class: "sub" }, [h("h4", { text: sb.title })].concat(sb.items.length ? sb.items.map(function (x) {
               return h("div", { class: "qa" }, [h("span", { class: "qa__q", text: x.q }), h("span", { class: "qa__a", text: x.a })]);
