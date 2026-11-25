@@ -93,8 +93,6 @@ window.BRIEF = {
             { id: "line", type: "textarea", rows: 2, label: "A line in their own words", hint: "Why they became a dentist, or what patients say about them.",
               placeholder: "e.g. I had a bad experience at the dentist as a child and spent years avoiding it. I would rather no one else had to." }
           ] },
-        { id: "team_rest", type: "radio", label: "Show the rest of the team on the site?",
-          options: [{ label: "Yes, with a group photo" }, { label: "Yes, with names and roles" }, { label: "No, dentists only" }] }
       ]
     },
 
@@ -231,12 +229,11 @@ window.BRIEF = {
 
     {
       id: "addons", title: "Add on",
-      lede: "Anything you pick goes into the quotation.",
+      lede: "All optional. Leave them blank if you do not want any. Anything you pick goes into the quotation.",
       fields: [
         { id: "add_lang", type: "radio", label: "More than one language",
           hint: "Every page written again in each language you add. RM250 a language.",
           options: [
-            { label: "English only (included)" },
             { label: "English and Bahasa Melayu (RM250)" },
             { label: "English, Bahasa Melayu and Chinese (RM500)" }
           ] },
@@ -244,15 +241,13 @@ window.BRIEF = {
           hint: "Any update or change to the website is on me for the whole period.",
           options: [
             { label: "RM1,000 (12 months)" },
-            { label: "RM600 (6 months)" },
-            { label: "Not for now" }
+            { label: "RM600 (6 months)" }
           ] },
         { id: "add_seo", type: "radio", label: "SEO content",
           hint: "Four new articles a month, written and published for you.",
           options: [
             { label: "RM3,600 (12 months, 48 articles)" },
-            { label: "RM2,000 (6 months, 24 articles)" },
-            { label: "Not for now" }
+            { label: "RM2,000 (6 months, 24 articles)" }
           ] }
       ]
     }
